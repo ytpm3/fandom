@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Fandom Page</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #0f0; /* Neon green text */
+            overflow-x: hidden; /* Hide horizontal overflow */
+        }
+        header {
+            position: relative;
+            background-color: #111;
+            color: #0f0;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #0f0; /* Neon green border */
+            overflow: hidden; /* Hide overflow to ensure matrix effect is contained */
+        }
+        .matrix-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place behind header content */
+            pointer-events: none; /* Ensure it does not capture mouse events */
+        }
+        nav {
+            background-color: #222;
+            color: #0f0;
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #0f0; /* Neon green border */
+        }
+        nav a {
+            color: #0f0;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        main {
+            padding: 20px;
+        }
+        footer {
+            background-color: #111;
+            color: #0f0;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            border-top: 1px solid #0f0; /* Neon green border */
+        }
+        .character-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .character-list li {
+            background-color: #222;
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #0f0; /* Neon green border */
+        }
+        .character-list a {
+            text-decoration: none;
+            color: #0f0;
+        }
+        .character-list a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="matrix-background">
+        <canvas id="matrixCanvas"></canvas>
+    </div>
+    <h1>Welcome to Matrix Fandom page</h1>
+</header>
+
+<nav>
+    <a href="#about">About</a>
+    <a href="#characters">Characters</a>
+</nav>
+
+<main>
+    <section id="about">
+        <h2>About the Fandom</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas diam orci, dignissim sit amet ultrices at, tristique eget nulla. Vestibulum sit amet metus sapien. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut id placerat ligula. Vivamus non finibus lacus. Fusce vitae rhoncus quam, quis interdum ligula. In sed euismod arcu, non mollis odio. Nullam tellus lectus, vehicula mattis tristique et, gravida non ante. Praesent a euismod ligula. Ut urna tellus, suscipit sit amet euismod et, dictum et libero. Donec id sollicitudin nulla, nec dapibus velit.</p>
+    </section>
+
+    <section id="characters">
+        <h2>Popular Characters</h2>
+        <ul class="character-list">
+            <li><a href="neo.html">Neo</a></li>
+            <li><a href="morpheus.html">Morpheus</a></li>
+            <li><a href="trinity.html">Trinity</a></li>
+            <li><a href="agentsmith.html">Agent Smith</a></li>
+        </ul>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2024 My Fandom Page. All rights reserved by Islam Yerkin, Timur Kassymbekov | SE-2303.</p>
+</footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const canvas = document.getElementById("matrixCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let columns, drops;
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+            // Reset drops array on resize
+            columns = canvas.width / 20;
+            drops = Array.from({ length: Math.ceil(columns) }).fill(0);
+        }
+
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#0f0";
+            ctx.font = "20px monospace";
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = String.fromCharCode(65 + Math.random() * 26);
+                ctx.fillText(text, i * 20, drops[i] * 20);
+                
+                if (drops[i] * 20 > canvas.height || Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        setInterval(draw, 33);
+    });
+</script>
+
+</body>
+</html>
