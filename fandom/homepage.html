@@ -11,25 +11,13 @@
             padding: 0;
             background-color: #000;
             color: #0f0; /* Neon green text */
-            overflow-x: hidden; /* Hide horizontal overflow */
         }
         header {
-            position: relative;
             background-color: #111;
             color: #0f0;
             padding: 20px;
             text-align: center;
             border-bottom: 1px solid #0f0; /* Neon green border */
-            overflow: hidden; /* Hide overflow to ensure matrix effect is contained */
-        }
-        .matrix-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Place behind header content */
-            pointer-events: none; /* Ensure it does not capture mouse events */
         }
         nav {
             background-color: #222;
@@ -82,9 +70,6 @@
 <body>
 
 <header>
-    <div class="matrix-background">
-        <canvas id="matrixCanvas"></canvas>
-    </div>
     <h1>Welcome to Matrix Fandom page</h1>
 </header>
 
@@ -113,46 +98,6 @@
 <footer>
     <p>&copy; 2024 My Fandom Page. All rights reserved by Islam Yerkin, Timur Kassymbekov | SE-2303.</p>
 </footer>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const canvas = document.getElementById("matrixCanvas");
-        const ctx = canvas.getContext("2d");
-
-        let columns, drops;
-
-        function resizeCanvas() {
-            canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = canvas.parentElement.clientHeight;
-            // Reset drops array on resize
-            columns = canvas.width / 20;
-            drops = Array.from({ length: Math.ceil(columns) }).fill(0);
-        }
-
-        function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = "#0f0";
-            ctx.font = "20px monospace";
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = String.fromCharCode(65 + Math.random() * 26);
-                ctx.fillText(text, i * 20, drops[i] * 20);
-                
-                if (drops[i] * 20 > canvas.height || Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-
-                drops[i]++;
-            }
-        }
-
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-        setInterval(draw, 33);
-    });
-</script>
 
 </body>
 </html>
